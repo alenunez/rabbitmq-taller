@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: miusuario
+      RABBITMQ_DEFAULT_PASS: mipassword
+
+  producer-python:
+    build: ./producer-python
+    depends_on:
+      - rabbitmq
+
+  consumer-python:
+    build: ./consumer-python
+    depends_on:
+      - rabbitmq
+
+  producer-java:
+    build: ./producer-java
+    depends_on:
+      - rabbitmq
+
+  consumer-java:
+    build: ./consumer-java
+    depends_on:
+      - rabbitmq
+
+  producer-csharp:
+    build: ./producer-csharp
+    depends_on:
+      - rabbitmq
+
+  consumer-csharp:
+    build: ./consumer-csharp
+    depends_on:
+      - rabbitmq
